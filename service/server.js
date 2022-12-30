@@ -2,21 +2,16 @@ import express from "express";
 import mongoose from "mongoose";
 import Data from "./seeds.js";
 import Videos from "./dbModel.js";
+import Cors from 'cors';
+// app config
 const app = express(); // Instatiate our server
 const port = process.env.PORT || 9000; // Port or own port
-
-// app config
-// middlewares
-app.use(express.json());
-// Whenever we receive a request, accept all the request
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"),
-    res.setHeader("Access-Control-Allow-Headers", "*"),
-    next();
-});
-// db config
 const connection_url =
   "mongodb+srv://admin:admin@cluster1.fcmf1kf.mongodb.net/tiktok?retryWrites=true&w=majority";
+// middlewares
+app.use(express.json());
+app.use(Cors());
+// db config
 mongoose.connect(connection_url);
 // api endpoint
 app.get("/", (req, res) => res.status(200).send("Hello world"));
